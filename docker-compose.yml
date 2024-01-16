@@ -1,0 +1,23 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./:/var/www/app
+    ports:
+      - 80:80
+    networks:
+      - app-network
+
+  redis:
+    image: redis:7.0.11-alpine
+    ports:
+      - 6379
+    command: redis-server --appendonly yes
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
